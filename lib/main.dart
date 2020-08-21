@@ -1,5 +1,6 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:wvs_warm_up/const.dart';
 import 'package:wvs_warm_up/pages/choose_sports_page.dart';
 
 void main() {
@@ -19,6 +20,10 @@ class WvsWarmUpApp extends StatelessWidget {
       builder: DevicePreview.appBuilder, // <--- /!\ Add the builder
       routes: {},
       home: ChooseSportsPage(),
+      theme: ThemeData(
+        primaryColor: cPRIMARY_COLOR,
+        scaffoldBackgroundColor: cBLACK,
+      ),
     );
   }
 }

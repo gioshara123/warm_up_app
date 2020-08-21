@@ -1,7 +1,3 @@
-import 'package:warm_up_app/enums/warm_up_exercise.dart';
-import 'package:warm_up_app/model/exercise.dart';
-import 'package:warm_up_app/model/sport.dart';
-
 import 'enums/warm_up_exercise.dart';
 import 'models/exercise.dart';
 import 'models/sport.dart';
