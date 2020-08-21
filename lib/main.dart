@@ -17,6 +17,7 @@ class WvsWarmUpApp extends StatelessWidget {
     return MaterialApp(
       locale: DevicePreview.of(context).locale, // <--- /!\ Add the locale
       builder: DevicePreview.appBuilder, // <--- /!\ Add the builder
+      routes: {},
       home: ChooseSportsPage(),
     );
   }

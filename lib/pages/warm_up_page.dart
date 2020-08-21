@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ChooseSportsPage extends StatelessWidget {
-  static const String ID = "./";
+class WarmUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Choose Sports!'),
+        child: Text('Hello World!'),
       ),
     );
   }
