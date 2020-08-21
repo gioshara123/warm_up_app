@@ -114,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Icons.add,
           color: Colors.red,
         ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ), // This trailing dcomma makes auto-formatting nicer for build methods.
     );
   }
 }
