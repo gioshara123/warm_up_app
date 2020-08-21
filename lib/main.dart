@@ -7,7 +7,7 @@ void main() {
   runApp(
     DevicePreview(
       builder: (context) => WvsWarmUpApp(),
-      enabled: true,
+      enabled: false,
     ),
   );
 }
