@@ -7,13 +7,14 @@ class RoundedRectangleTextField extends StatelessWidget {
   final Widget prefixIcon;
   final TextEditingController controller;
   final Widget suffixIcon;
+  final Function onChanged;
 
   const RoundedRectangleTextField(
       {Key key,
       this.hintText,
       this.prefixIcon,
       this.controller,
-      this.suffixIcon})
+      this.suffixIcon, this.onChanged})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -25,6 +26,7 @@ class RoundedRectangleTextField extends StatelessWidget {
         color: cWHITE.withOpacity(0.6));
 
     return TextField(
+      onChanged: onChanged,
       controller: controller,
       style: textFieldStyle,
       decoration: InputDecoration(

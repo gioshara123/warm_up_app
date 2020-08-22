@@ -22,4 +22,13 @@ class ChooseSportsProvider with ChangeNotifier {
     super.dispose();
     textEditingController.dispose();
   }
+
+  void textFieldOnChange(String newText) {
+    notifyListeners();
+  }
+
+  void onClearButtonPressed() {
+    textEditingController.clear();
+    notifyListeners();
+  }
 }
