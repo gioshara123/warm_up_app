@@ -4,6 +4,7 @@ import 'package:wvs_warm_up/enums/widget_state.dart';
 import 'package:wvs_warm_up/models/exercise.dart';
 import 'package:wvs_warm_up/providers/warm_up_provider.dart';
 import 'package:wvs_warm_up/services/ui_services.dart';
+import 'package:wvs_warm_up/widgets/no_glow_behaviour.dart';
 import '../const.dart';
 
 class WarmUpTab extends StatelessWidget {
@@ -27,92 +28,96 @@ class WarmUpTab extends StatelessWidget {
           actualDeviceSize.width,
         ));
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: <Widget>[
-              Align(
-                  alignment: Alignment.centerRight,
-                  child: Text('${exercise.exerciseRepetition}',
-                      style: secondaryTextStyle)),
-              Text(
-                '${exercise.exerciseName}',
-                style: secondaryTextStyle,
-              ),
-              Container(
-                width: actualDeviceSize.width,
-                height: actualDeviceSize.height * 1 / 2.5,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('${exercise.exerciseGif}'),
-                    fit: BoxFit.fitWidth,
+      body: ScrollConfiguration(
+        behavior: NoGlowBehaviour(),
+        child: SingleChildScrollView(
+          child: Container(
+            child: Column(
+              children: <Widget>[
+                Align(
+                    alignment: Alignment.centerRight,
+                    child: Text('${exercise.exerciseRepetition}',
+                        style: secondaryTextStyle)),
+                Text(
+                  '${exercise.exerciseName}',
+                  style: secondaryTextStyle,
+                ),
+                Container(
+                  width: actualDeviceSize.width,
+                  height: actualDeviceSize.height * 1 / 2.5,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('${exercise.exerciseGif}'),
+                      fit: BoxFit.fitWidth,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 5.0,
-              ),
-              provider.currentWarmUpMode == WarmUpMode.withTime
-                  ? Container(
-                      alignment: Alignment.centerLeft,
-                      width: actualDeviceSize.width,
-                      height: actualDeviceSize.height * 1 / 39,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                          color: cWHITE),
-                      child: Container(
-                        width: actualDeviceSize.width * provider.timerBarLevel,
+                SizedBox(
+                  height: 5.0,
+                ),
+                provider.currentWarmUpMode == WarmUpMode.withTime
+                    ? Container(
+                        alignment: Alignment.centerLeft,
+                        width: actualDeviceSize.width,
                         height: actualDeviceSize.height * 1 / 39,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                          color: cSECONDARY_COLOR,
+                            borderRadius: BorderRadius.circular(15.0),
+                            color: cWHITE),
+                        child: Container(
+                          width:
+                              actualDeviceSize.width * provider.timerBarLevel,
+                          height: actualDeviceSize.height * 1 / 39,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.0),
+                            color: cSECONDARY_COLOR,
+                          ),
                         ),
-                      ),
-                    )
-                  : Container(),
-              SizedBox(
-                height: 10.0,
-              ),
-              Row(
-                children: <Widget>[
-                  Text(
-                    ' Tips:',
-                    style: secondaryTextStyle,
-                  ),
-                  IconButton(
-                    icon: provider.tipsState == WidgetState.Default
-                        ? Icon(
-                            Icons.keyboard_arrow_down,
-                            color: cWHITE,
-                          )
-                        : Icon(
-                            Icons.keyboard_arrow_up,
-                            color: cWHITE,
-                          ),
-                    onPressed: () => provider.onTipsStateChanged(),
-                  ),
-                ],
-              ),
-              provider.tipsState == WidgetState.Default
-                  ? Column(
-                      children: <Widget>[
-                        for (var exerciseHint
-                            in exercise.exerciseHint.split(',')) ...[
-                          SizedBox(
-                            height: 2.0,
-                          ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              ' - $exerciseHint',
-                              style: tertiaryTextStyle,
+                      )
+                    : Container(),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Row(
+                  children: <Widget>[
+                    Text(
+                      ' Tips:',
+                      style: secondaryTextStyle,
+                    ),
+                    IconButton(
+                      icon: provider.tipsState == WidgetState.Default
+                          ? Icon(
+                              Icons.keyboard_arrow_down,
+                              color: cWHITE,
+                            )
+                          : Icon(
+                              Icons.keyboard_arrow_up,
+                              color: cWHITE,
                             ),
-                          ),
-                        ]
-                      ],
-                    )
-                  : Container(),
-            ],
+                      onPressed: () => provider.onTipsStateChanged(),
+                    ),
+                  ],
+                ),
+                provider.tipsState == WidgetState.Default
+                    ? Column(
+                        children: <Widget>[
+                          for (var exerciseHint
+                              in exercise.exerciseHint.split(',')) ...[
+                            SizedBox(
+                              height: 2.0,
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                ' - $exerciseHint',
+                                style: tertiaryTextStyle,
+                              ),
+                            ),
+                          ]
+                        ],
+                      )
+                    : Container(),
+              ],
+            ),
           ),
         ),
       ),

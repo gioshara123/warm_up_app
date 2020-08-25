@@ -7,6 +7,7 @@ import 'package:wvs_warm_up/page_arguments/warm_up_page_arguments.dart';
 import 'package:wvs_warm_up/pages/warm_up_page.dart';
 import 'package:wvs_warm_up/providers/choose_sports_provider.dart';
 import 'package:wvs_warm_up/services/ui_services.dart';
+import 'package:wvs_warm_up/widgets/no_glow_behaviour.dart';
 import 'package:wvs_warm_up/widgets/responsive_widget.dart';
 import 'package:wvs_warm_up/widgets/rounded_rectangle_text_field.dart';
 import '../const_exercise_information.dart';
@@ -48,38 +49,41 @@ class ChooseSportsPage extends StatelessWidget {
                                   fontWeight: FontWeight.bold),
                             ),
                           )
-                        : GridView.builder(
-                            itemCount: provider.currentSportsList.length,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    childAspectRatio: 2 / 1,
-                                    crossAxisSpacing: 10.0,
-                                    mainAxisSpacing: 10.0),
-                            itemBuilder: (context, index) {
-                              final Sport sport =
-                                  provider.currentSportsList[index];
-                              final Function onSportCardPressed = () async {
-                                provider.resetCurrentSportsList();
-                                provider.textEditingController.clear();
-                                FocusScope.of(context).unfocus();
-                                Navigator.pushNamed(
-                                    context, AnimatedWarmUpPageWidget.ID,
-                                    arguments:
-                                        WarmUpPageArguments(sport: sport));
-                              };
+                        : ScrollConfiguration(
+                            behavior: NoGlowBehaviour(),
+                            child: GridView.builder(
+                              itemCount: provider.currentSportsList.length,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      childAspectRatio: 2 / 1,
+                                      crossAxisSpacing: 10.0,
+                                      mainAxisSpacing: 10.0),
+                              itemBuilder: (context, index) {
+                                final Sport sport =
+                                    provider.currentSportsList[index];
+                                final Function onSportCardPressed = () async {
+                                  provider.resetCurrentSportsList();
+                                  provider.textEditingController.clear();
+                                  FocusScope.of(context).unfocus();
+                                  Navigator.pushNamed(
+                                      context, AnimatedWarmUpPageWidget.ID,
+                                      arguments:
+                                          WarmUpPageArguments(sport: sport));
+                                };
 
-                              if (index % 2 == 0) {
+                                if (index % 2 == 0) {
+                                  return InkWell(
+                                      onTap: onSportCardPressed,
+                                      child: _sportCardIconTextBuilder(sport,
+                                          _sportNameStyle, actualDeviceSize));
+                                }
                                 return InkWell(
                                     onTap: onSportCardPressed,
-                                    child: _sportCardIconTextBuilder(sport,
+                                    child: _sportCardTextIconBuilder(sport,
                                         _sportNameStyle, actualDeviceSize));
-                              }
-                              return InkWell(
-                                  onTap: onSportCardPressed,
-                                  child: _sportCardTextIconBuilder(sport,
-                                      _sportNameStyle, actualDeviceSize));
-                            },
+                              },
+                            ),
                           ),
                   )
                 ],
