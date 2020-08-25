@@ -21,7 +21,7 @@ class WvsWarmUpApp extends StatelessWidget {
       builder: DevicePreview.appBuilder, // <--- /!\ Add the builder
       routes: {
         ChooseSportsPage.ID : (context)=>ChooseSportsPage(),
-        WarmUpPage.ID : (context)=>WarmUpPage(),
+        AnimatedWarmUpPageWidget.ID : (context)=>AnimatedWarmUpPageWidget(),
       },
       initialRoute: ChooseSportsPage.ID,
       theme: ThemeData(

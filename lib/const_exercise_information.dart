@@ -1,5 +1,5 @@
 import 'enums/warm_up_exercise.dart';
-import 'models/exercise.dart';
+import 'models/exercises.dart';
 import 'models/sport.dart';
 
 List<Sport> sports = [
@@ -7,7 +7,7 @@ List<Sport> sports = [
     id: 0,
     name: 'Football',
     imageLocalPath: 'images/sport_icons/am_football.png',
-    exercise: Exercise(
+    exercise: Exercises(
       exerciseLength: 20,
       exerciseWorkTimes: [
         20,
@@ -119,7 +119,7 @@ List<Sport> sports = [
         'Hand',
         'Brustmuskulatur',
       ],
-      warmUps: [
+      warmUpModes: [
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
@@ -147,7 +147,7 @@ List<Sport> sports = [
     id: 1,
     name: 'Hockey',
     imageLocalPath: 'images/sport_icons/hockey.png',
-    exercise: Exercise(
+    exercise: Exercises(
       exerciseLength: 10,
       exerciseWorkTimes: [20, 20, 0, 20, 0, 60, 0, 20, 0, 20],
       exerciseGifs: [
@@ -198,7 +198,7 @@ List<Sport> sports = [
         '15 Wdh.',
         '2x 20sek',
       ],
-      warmUps: [
+      warmUpModes: [
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
         WarmUpExercise.withoutTime,
@@ -216,7 +216,7 @@ List<Sport> sports = [
     id: 2,
     name: 'Volleyball',
     imageLocalPath: 'images/sport_icons/volleyball.png',
-    exercise: Exercise(
+    exercise: Exercises(
       exerciseLength: 13,
       exerciseGifs: [
         'images/gif_exercises/volleyball/1Sport26.jpeg',
@@ -293,7 +293,7 @@ List<Sport> sports = [
         '60sek',
         '20-30Wdh.',
       ],
-      warmUps: [
+      warmUpModes: [
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
@@ -314,7 +314,7 @@ List<Sport> sports = [
     id: 3,
     name: 'Basketball',
     imageLocalPath: 'images/sport_icons/basketball.png',
-    exercise: Exercise(
+    exercise: Exercises(
       exerciseLength: 13,
       exerciseWorkTimes: [20, 20, 0, 0, 20, 20, 0, 30, 30, 20, 60, 0, 20],
       exerciseGifs: [
@@ -377,7 +377,7 @@ List<Sport> sports = [
         '20-30Wdh.',
         '2x 20sek',
       ],
-      warmUps: [
+      warmUpModes: [
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
         WarmUpExercise.withoutTime,
@@ -398,7 +398,7 @@ List<Sport> sports = [
     id: 4,
     name: 'Tennis',
     imageLocalPath: 'images/sport_icons/tennis.png',
-    exercise: Exercise(
+    exercise: Exercises(
       exerciseLength: 12,
       exerciseWorkTimes: [
         20,
@@ -456,7 +456,7 @@ List<Sport> sports = [
         '30sek.',
         '2x 20sek.',
       ],
-      warmUps: [
+      warmUpModes: [
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
@@ -490,7 +490,7 @@ List<Sport> sports = [
     id: 5,
     name: 'Ballspiele',
     imageLocalPath: 'images/sport_icons/ball_spiele.png',
-    exercise: Exercise(
+    exercise: Exercises(
       exerciseLength: 20,
       exerciseGifs: [
         'images/gif_exercises/ball_games/1Sport26.jpeg', //gif
@@ -580,7 +580,7 @@ List<Sport> sports = [
         '2x 20sek',
         '2x 20sek',
       ],
-      warmUps: [
+      warmUpModes: [
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
@@ -630,7 +630,7 @@ List<Sport> sports = [
     id: 6,
     name: 'Badminton',
     imageLocalPath: 'images/sport_icons/badminton.png',
-    exercise: Exercise(
+    exercise: Exercises(
       exerciseLength: 12,
       exerciseGifs: [
         'images/gif_exercises/badminton/1Sport26.jpeg', //gif
@@ -660,7 +660,7 @@ List<Sport> sports = [
         30,
         20,
       ],
-      warmUps: [
+      warmUpModes: [
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
@@ -722,7 +722,7 @@ List<Sport> sports = [
     id: 7,
     name: 'Fußball',
     imageLocalPath: 'images/sport_icons/football.png',
-    exercise: Exercise(
+    exercise: Exercises(
       exerciseLength: 14,
       exerciseGifs: [
         'images/gif_exercises/football/1Sport26.jpeg', //gif
@@ -788,7 +788,7 @@ List<Sport> sports = [
         0,
         0,
       ],
-      warmUps: [
+      warmUpModes: [
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
@@ -826,7 +826,7 @@ List<Sport> sports = [
     id: 8,
     name: 'Tischtennis',
     imageLocalPath: 'images/sport_icons/ping-pong.png',
-    exercise: Exercise(
+    exercise: Exercises(
       exerciseLength: 8,
       exerciseGifs: [
         'images/gif_exercises/ping_pong/1Sport19.jpeg', //gif
@@ -868,7 +868,7 @@ List<Sport> sports = [
         60,
         20,
       ],
-      warmUps: [
+      warmUpModes: [
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
@@ -894,7 +894,7 @@ List<Sport> sports = [
     id: 9,
     name: 'Fitness',
     imageLocalPath: 'images/sport_icons/fitness1.png',
-    exercise: Exercise(
+    exercise: Exercises(
       exerciseLength: 11,
       exerciseGifs: [
         'images/gif_exercises/fitness/1Sport19.jpeg', //gif
@@ -948,7 +948,7 @@ List<Sport> sports = [
         0,
         20,
       ],
-      warmUps: [
+      warmUpModes: [
         WarmUpExercise.withTime,
         WarmUpExercise.withoutTime,
         WarmUpExercise.withoutTime,
@@ -980,7 +980,7 @@ List<Sport> sports = [
     id: 10,
     name: 'Joggen',
     imageLocalPath: 'images/sport_icons/running.png',
-    exercise: Exercise(
+    exercise: Exercises(
       exerciseLength: 7,
       exerciseGifs: [
         'images/gif_exercises/running/1Sport26.jpeg', //gif
@@ -1027,7 +1027,7 @@ List<Sport> sports = [
         'Anknien',
         'Adduktoren',
       ],
-      warmUps: [
+      warmUpModes: [
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
         WarmUpExercise.withoutTime,
@@ -1042,7 +1042,7 @@ List<Sport> sports = [
     id: 11,
     name: 'Schwimmen',
     imageLocalPath: 'images/sport_icons/swimming.png',
-    exercise: Exercise(
+    exercise: Exercises(
       exerciseLength: 5,
       exerciseGifs: [
         'images/gif_exercises/swimming/1Sport19.jpeg', //gif
@@ -1079,7 +1079,7 @@ List<Sport> sports = [
         '30sek.',
         '2x 20sek',
       ],
-      warmUps: [
+      warmUpModes: [
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
@@ -1092,7 +1092,7 @@ List<Sport> sports = [
     id: 12,
     name: 'Turnen',
     imageLocalPath: 'images/sport_icons/gymnastics.png',
-    exercise: Exercise(
+    exercise: Exercises(
       exerciseLength: 25,
       exerciseGifs: [
         'images/gif_exercises/gymnastics/1Sport26.jpeg', //gif
@@ -1229,7 +1229,7 @@ List<Sport> sports = [
         0,
         0,
       ],
-      warmUps: [
+      warmUpModes: [
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
@@ -1262,7 +1262,7 @@ List<Sport> sports = [
     id: 13,
     name: 'Parcours',
     imageLocalPath: 'images/sport_icons/parcours.png',
-    exercise: Exercise(
+    exercise: Exercises(
       exerciseLength: 25,
       exerciseGifs: [
         'images/gif_exercises/gymnastics/1Sport26.jpeg', //gif
@@ -1399,7 +1399,7 @@ List<Sport> sports = [
         0,
         0,
       ],
-      warmUps: [
+      warmUpModes: [
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
@@ -1432,7 +1432,7 @@ List<Sport> sports = [
     id: 14,
     name: 'Bouldern-Klettern',
     imageLocalPath: 'images/sport_icons/climbing.png',
-    exercise: Exercise(
+    exercise: Exercises(
       exerciseLength: 25,
       exerciseGifs: [
         'images/gif_exercises/gymnastics/1Sport26.jpeg', //gif
@@ -1569,7 +1569,7 @@ List<Sport> sports = [
         0,
         0,
       ],
-      warmUps: [
+      warmUpModes: [
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
@@ -1602,7 +1602,7 @@ List<Sport> sports = [
     id: 15,
     name: 'Leichtathletik',
     imageLocalPath: 'images/sport_icons/athletics.png',
-    exercise: Exercise(
+    exercise: Exercises(
       exerciseLength: 19,
       exerciseGifs: [
         'images/gif_exercises/athletics/1Sport26.jpeg', //gif
@@ -1709,7 +1709,7 @@ List<Sport> sports = [
         0,
         20,
       ],
-      warmUps: [
+      warmUpModes: [
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,
         WarmUpExercise.withTime,

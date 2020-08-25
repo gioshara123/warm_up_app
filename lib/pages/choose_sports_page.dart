@@ -2,18 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wvs_warm_up/const.dart';
 import 'package:wvs_warm_up/models/sport.dart';
+import 'package:wvs_warm_up/page_arguments/warm_up_page_arguments.dart';
+import 'package:wvs_warm_up/pages/warm_up_page.dart';
 import 'package:wvs_warm_up/providers/choose_sports_provider.dart';
 import 'package:wvs_warm_up/services/ui_services.dart';
-import 'package:wvs_warm_up/wigdets/rounded_rectangle_text_field.dart';
-
+import 'package:wvs_warm_up/widgets/rounded_rectangle_text_field.dart';
 import '../const_exercise_information.dart';
 
 class ChooseSportsPage extends StatelessWidget {
   static const String ID = "./";
+
   @override
   Widget build(BuildContext context) {
     final Size actualDeviceSize = getActualDeviceSize(MediaQuery.of(context));
-    final TextStyle _sportNameStyle = TextStyle(fontSize: actualDeviceSize.width * 1/18);
+    final TextStyle _sportNameStyle =
+        TextStyle(fontSize: actualDeviceSize.width * 1 / 18);
 
     return ChangeNotifierProvider<ChooseSportsProvider>(
       create: (BuildContext context) => ChooseSportsProvider(),
@@ -42,10 +45,19 @@ class ChooseSportsPage extends StatelessWidget {
                           mainAxisSpacing: 10.0),
                       itemBuilder: (context, index) {
                         final Sport sport = sports[index];
-                        if(index % 2 == 0) {
-                          return _sportCardIconTextBuilder(sport,_sportNameStyle, actualDeviceSize);
+                        final Function onSportCardPressed = () =>
+                            Navigator.pushNamed(context, AnimatedWarmUpPageWidget.ID,
+                                arguments: WarmUpPageArguments(sport: sport));
+                        if (index % 2 == 0) {
+                          return InkWell(
+                              onTap: onSportCardPressed,
+                              child: _sportCardIconTextBuilder(
+                                  sport, _sportNameStyle, actualDeviceSize));
                         }
-                        return _sportCardTextIconBuilder(sport,_sportNameStyle, actualDeviceSize);
+                        return InkWell(
+                            onTap: onSportCardPressed,
+                            child: _sportCardTextIconBuilder(
+                                sport, _sportNameStyle, actualDeviceSize));
                       },
                     ),
                   )
@@ -57,7 +69,6 @@ class ChooseSportsPage extends StatelessWidget {
       }),
     );
   }
-
 
   Widget _wvsWarmUpLogoBuilder(Size actualDeviceSize) {
     return SafeArea(
@@ -106,7 +117,8 @@ class ChooseSportsPage extends StatelessWidget {
     );
   }
 
-  Widget _sportCardIconTextBuilder(Sport sport, TextStyle sportNameStyle, Size actualDeviceSize) {
+  Widget _sportCardIconTextBuilder(
+      Sport sport, TextStyle sportNameStyle, Size actualDeviceSize) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(9.0),
@@ -116,14 +128,13 @@ class ChooseSportsPage extends StatelessWidget {
         children: <Widget>[
           Container(
             margin: const EdgeInsets.all(5.0),
-            width: actualDeviceSize.width * 1/6,
-            height:  actualDeviceSize.width * 1/6,
+            width: actualDeviceSize.width * 1 / 6,
+            height: actualDeviceSize.width * 1 / 6,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage('${sport.imageLocalPath}'),
-                )
-            ),
+              fit: BoxFit.cover,
+              image: AssetImage('${sport.imageLocalPath}'),
+            )),
           ),
           SizedBox(
             width: 2.0,
@@ -131,15 +142,16 @@ class ChooseSportsPage extends StatelessWidget {
           Expanded(
               child: Text(
             '${sport.name}',
-                textAlign: TextAlign.center,
-  style: sportNameStyle,
+            textAlign: TextAlign.center,
+            style: sportNameStyle,
           )),
         ],
       ),
     );
   }
 
-  Widget _sportCardTextIconBuilder(Sport sport, TextStyle sportNameStyle, Size actualDeviceSize) {
+  Widget _sportCardTextIconBuilder(
+      Sport sport, TextStyle sportNameStyle, Size actualDeviceSize) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(9.0),
@@ -152,20 +164,20 @@ class ChooseSportsPage extends StatelessWidget {
               '${sport.name}',
               textAlign: TextAlign.center,
               style: sportNameStyle,
-            ),),
+            ),
+          ),
           SizedBox(
             width: 2.0,
           ),
           Container(
             margin: const EdgeInsets.all(5.0),
-            width: actualDeviceSize.width * 1/6,
-            height:  actualDeviceSize.width * 1/6,
+            width: actualDeviceSize.width * 1 / 6,
+            height: actualDeviceSize.width * 1 / 6,
             decoration: BoxDecoration(
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage('${sport.imageLocalPath}'),
-              )
-            ),
+                image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage('${sport.imageLocalPath}'),
+            )),
           ),
 //          Padding(
 //            padding: const EdgeInsets.all(8.0),
