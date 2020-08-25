@@ -34,8 +34,8 @@ class WarmUpPage extends StatelessWidget {
         decoration: TextDecoration.underline);
 
     final TextStyle timerValueTextStyle = TextStyle(
-      fontSize: cH2(actualDeviceSize.width),
-      color: cSECONDARY_COLOR,
+      fontSize: cH1(actualDeviceSize.width),
+      color: cWHITE,
     );
     return ChangeNotifierProvider<WarmUpProvider>(
       create: (BuildContext context) => WarmUpProvider(
@@ -50,9 +50,16 @@ class WarmUpPage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
-                      '${provider.timerValue}',
-                      style: timerValueTextStyle,
+                    Container(
+                      child: Text(
+                        '${provider.timerValue}',
+                        style: timerValueTextStyle,
+                      ),
+                      padding: const EdgeInsets.all(5.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                        color: cSECONDARY_COLOR,
+                      ),
                     ),
                     Align(
                       alignment: Alignment.center,
