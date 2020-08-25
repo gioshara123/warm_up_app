@@ -8,6 +8,7 @@ import 'package:wvs_warm_up/models/exercises.dart';
 import 'package:wvs_warm_up/page_arguments/warm_up_page_arguments.dart';
 import 'package:wvs_warm_up/providers/warm_up_provider.dart';
 import 'package:wvs_warm_up/services/ui_services.dart';
+import 'package:wvs_warm_up/tabs/warm_up_tab.dart';
 import 'package:wvs_warm_up/widgets/rounded_icon_button.dart';
 
 class WarmUpPage extends StatelessWidget {
@@ -24,126 +25,151 @@ class WarmUpPage extends StatelessWidget {
     final String sportName = warmUpPageArguments.sport.name;
     final Exercises exercises = warmUpPageArguments.sport.exercise;
     final TextStyle primaryTextStyle = TextStyle(
-      color: cWHITE,
-      fontSize: cH1(
-        actualDeviceSize.width,
-      ),
-      letterSpacing: 10.0,
-      fontWeight: FontWeight.bold,
-      decoration: TextDecoration.underline
+        color: cWHITE,
+        fontSize: cH1(
+          actualDeviceSize.width,
+        ),
+        letterSpacing: 10.0,
+        fontWeight: FontWeight.bold,
+        decoration: TextDecoration.underline);
+
+    final TextStyle timerValueTextStyle = TextStyle(
+      fontSize: cH2(actualDeviceSize.width),
+      color: cSECONDARY_COLOR,
     );
     return ChangeNotifierProvider<WarmUpProvider>(
-      create: (BuildContext context) =>
-          WarmUpProvider(tickerProviderStateMixin: tickerProviderStateMixin, exercises: exercises, context: context),
+      create: (BuildContext context) => WarmUpProvider(
+          tickerProviderStateMixin: tickerProviderStateMixin,
+          exercises: exercises,
+          context: context),
       child: Consumer<WarmUpProvider>(builder: (context, provider, _) {
         return Scaffold(
-          body: Stack(
+          body: Column(
             children: <Widget>[
-              Align(
-                alignment: Alignment.topRight,
-                child: IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Icons.close,color: cWHITE, size: actualDeviceSize.width * 1/10,),
+              SafeArea(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      '${provider.timerValue}',
+                      style: timerValueTextStyle,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        '$sportName'.toUpperCase(),
+                        style: primaryTextStyle,
+                      ),
+                    ),
+                    IconButton(
+                      padding: const EdgeInsets.all(0),
+                      onPressed: () => Navigator.pop(context),
+                      icon: Icon(
+                        Icons.close,
+                        color: cWHITE,
+                        size: actualDeviceSize.width * 1 / 10,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Column(
+              SizedBox(
+                height: 5.0,
+              ),
+              Expanded(
+                child: Container(
+                  child: PageView.builder(
+                    controller: provider.pageController,
+                    //physics: NeverScrollableScrollPhysics(),
+                    itemCount: exercises.exerciseLength,
+                    onPageChanged: (int index) => provider.onPageChanged(index),
+                    itemBuilder: (context, index) {
+                      final Exercise exercise =
+                          Exercise.fromExercises(exercises, index);
+                      return WarmUpTab(
+                        exercise: exercise,
+                        exerciseLength: exercises.exerciseLength,
+                        provider: provider,
+                      );
+                    },
+                  ),
+                ),
+              ),
+              Wrap(
+                alignment: WrapAlignment.center,
+                direction: Axis.horizontal,
                 children: <Widget>[
-                  SafeArea(
-                    child: Text(
-                      '$sportName'.toUpperCase(),
-                      style: primaryTextStyle,
+                  for (int i = 0; i < exercises.exerciseLength; i++)
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        _pageViewNumberBuilder(i, provider,
+                            exercises.exerciseLength, actualDeviceSize),
+                        Container(
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.symmetric(
+                              horizontal: actualDeviceSize.width * 1 / 70,
+                              vertical: 0),
+                          width: provider.warmUpPageCurrentIndex == i
+                              ? actualDeviceSize.width * 1 / 8
+                              : actualDeviceSize.width * 1 / 29,
+                          height: provider.warmUpPageCurrentIndex == i
+                              ? actualDeviceSize.width * 1 / 27
+                              : actualDeviceSize.width * 1 / 27,
+                          decoration: BoxDecoration(
+                            shape: provider.warmUpPageCurrentIndex == i
+                                ? BoxShape.rectangle
+                                : BoxShape.circle,
+                            color: provider.warmUpPageCurrentIndex == i
+                                ? cSECONDARY_COLOR
+                                : cSECONDARY_COLOR.withOpacity(0.5),
+                            borderRadius: provider.warmUpPageCurrentIndex == i
+                                ? BorderRadius.circular(5.0)
+                                : null,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  SizedBox(
-                    height: 5.0,
-                  ),
-                  Expanded(
-                    child: Container(
-                      child: PageView.builder(
-                        controller: provider.pageController,
-                        //physics: NeverScrollableScrollPhysics(),
-                        itemCount: exercises.exerciseLength,
-                        onPageChanged: (int index) => provider.onPageChanged(index),
-                        itemBuilder: (context, index) {
-                          final Exercise exercise =
-                              Exercise.fromExercises(exercises, index);
-                          return WarmUpTab(
-                            exercise: exercise,
-                            exerciseLength: exercises.exerciseLength,
-                            provider: provider,
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                  Wrap(
-                    alignment: WrapAlignment.center,
-                    direction: Axis.horizontal,
-                    children: <Widget>[
-                      for (int i = 0; i < exercises.exerciseLength; i++)
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            _pageViewNumberBuilder(i, provider,
-                                exercises.exerciseLength, actualDeviceSize),
-                            Container(
-                              alignment: Alignment.center,
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: actualDeviceSize.width * 1 / 70,
-                                  vertical: 0),
-                              width: provider.warmUpPageCurrentIndex == i
-                                  ? actualDeviceSize.width * 1 / 8
-                                  : actualDeviceSize.width * 1 / 29,
-                              height: provider.warmUpPageCurrentIndex == i
-                                  ? actualDeviceSize.width * 1 / 27
-                                  : actualDeviceSize.width * 1 / 27,
-                              decoration: BoxDecoration(
-                                shape: provider.warmUpPageCurrentIndex == i
-                                    ? BoxShape.rectangle
-                                    : BoxShape.circle,
-                                color: provider.warmUpPageCurrentIndex == i
-                                    ? cSECONDARY_COLOR
-                                    : cSECONDARY_COLOR.withOpacity(0.5),
-                                borderRadius: provider.warmUpPageCurrentIndex == i
-                                    ? BorderRadius.circular(5.0)
-                                    : null,
-                              ),
-                            ),
-                          ],
-                        ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  //for(var warmUpMode in exercises.warmUpModes)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      RoundedIconButton(
-                        icon: Icon(
-                          Icons.arrow_back_ios,
-                          color: cSECONDARY_COLOR,
-                        ),
-                        onPressed: () => provider.onNextExerciseChange(),
-                      ),
-                     provider.currentWarmUpMode == WarmUpMode.withTime ?
-                      RoundedIconButton(
-                        icon: Icon(
-                          Icons.pause,
-                          color: cSECONDARY_COLOR,
-                        ),
-                        onPressed: () {},
-                      ) : Container(),
-                      RoundedIconButton(
-                        icon: Icon(
-                          Icons.arrow_forward_ios,
-                          color: cSECONDARY_COLOR,
-                        ),
-                        onPressed: () => provider.onNextExerciseChange(),
-                      ),
-                    ],
-                  )
                 ],
               ),
+              SizedBox(
+                height: 10.0,
+              ),
+              //for(var warmUpMode in exercises.warmUpModes)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  RoundedIconButton(
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: cSECONDARY_COLOR,
+                    ),
+                    onPressed: () => provider.onPreviousExerciseChange(),
+                  ),
+                  provider.currentWarmUpMode == WarmUpMode.withTime
+                      ? RoundedIconButton(
+                          icon: Icon(
+                            provider.timerSubscription == null ||
+                                    provider.timerSubscription.isPaused
+                                ? Icons.play_arrow
+                                : Icons.pause,
+                            color: cSECONDARY_COLOR,
+                          ),
+                          onPressed: provider.timerSubscription == null ||
+                                  provider.timerSubscription.isPaused
+                              ? () => provider.onTimerRun()
+                              : () => provider.onTimerPause(),
+                        )
+                      : Container(),
+                  RoundedIconButton(
+                    icon: Icon(
+                      Icons.arrow_forward_ios,
+                      color: cSECONDARY_COLOR,
+                    ),
+                    onPressed: () => provider.onNextExerciseChange(),
+                  ),
+                ],
+              )
             ],
           ),
         );
@@ -174,95 +200,6 @@ class WarmUpPage extends StatelessWidget {
     return Text(
       '',
       style: pageIndexStyle,
-    );
-  }
-}
-
-class WarmUpTab extends StatelessWidget {
-  final Exercise exercise;
-  final int exerciseLength;
-  final WarmUpProvider provider;
-
-  const WarmUpTab({Key key, this.exercise, this.exerciseLength, this.provider})
-      : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    final Size actualDeviceSize = getActualDeviceSize(MediaQuery.of(context));
-    final TextStyle secondaryTextStyle = TextStyle(
-        color: cWHITE,
-        fontSize: cH2(
-          actualDeviceSize.width,
-        ));
-    final TextStyle tertiaryTextStyle = TextStyle(
-        color: cWHITE,
-        fontSize: cPAR(
-          actualDeviceSize.width,
-        ));
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: <Widget>[
-              Align(
-                  alignment: Alignment.centerRight,
-                  child: Text('${exercise.exerciseRepetition}',
-                      style: secondaryTextStyle)),
-              Text(
-                '${exercise.exerciseName}',
-                style: secondaryTextStyle,
-              ),
-              Container(
-                width: actualDeviceSize.width,
-                height: actualDeviceSize.height * 1 / 2.5,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('${exercise.exerciseGif}'),
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 5.0,
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                width: actualDeviceSize.width,
-                height: actualDeviceSize.height * 1 / 39,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.0), color: cWHITE),
-                child: Container(
-                  width: provider.timerBarLevel,
-                  height: actualDeviceSize.height * 1 / 39,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.0),
-                    color: cSECONDARY_COLOR,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  ' Tips:',
-                  style: secondaryTextStyle,
-                ),
-              ),
-              for (var exerciseHint in exercise.exerciseHint.split(',')) ...[
-                SizedBox(height: 2.0,),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    ' - $exerciseHint',
-                    style: tertiaryTextStyle,
-                  ),
-                ),
-              ]
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

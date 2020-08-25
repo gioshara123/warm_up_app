@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wvs_warm_up/const.dart';
+import 'package:wvs_warm_up/models/device_information.dart';
 import 'package:wvs_warm_up/models/sport.dart';
 import 'package:wvs_warm_up/page_arguments/warm_up_page_arguments.dart';
 import 'package:wvs_warm_up/pages/warm_up_page.dart';
 import 'package:wvs_warm_up/providers/choose_sports_provider.dart';
 import 'package:wvs_warm_up/services/ui_services.dart';
+import 'package:wvs_warm_up/widgets/responsive_widget.dart';
 import 'package:wvs_warm_up/widgets/rounded_rectangle_text_field.dart';
 import '../const_exercise_information.dart';
 
@@ -36,30 +38,49 @@ class ChooseSportsPage extends StatelessWidget {
                     height: 10.0,
                   ),
                   Expanded(
-                    child: GridView.builder(
-                      itemCount: sports.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 2 / 1,
-                          crossAxisSpacing: 10.0,
-                          mainAxisSpacing: 10.0),
-                      itemBuilder: (context, index) {
-                        final Sport sport = sports[index];
-                        final Function onSportCardPressed = () =>
-                            Navigator.pushNamed(context, AnimatedWarmUpPageWidget.ID,
-                                arguments: WarmUpPageArguments(sport: sport));
-                        if (index % 2 == 0) {
-                          return InkWell(
-                              onTap: onSportCardPressed,
-                              child: _sportCardIconTextBuilder(
-                                  sport, _sportNameStyle, actualDeviceSize));
-                        }
-                        return InkWell(
-                            onTap: onSportCardPressed,
-                            child: _sportCardTextIconBuilder(
-                                sport, _sportNameStyle, actualDeviceSize));
-                      },
-                    ),
+                    child: provider.currentSportsList.isEmpty
+                        ? Center(
+                            child: Text(
+                              'KEIN ERGEBNIS!',
+                              style: TextStyle(
+                                  fontSize: cH1(actualDeviceSize.width),
+                                  color: cWHITE,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          )
+                        : GridView.builder(
+                            itemCount: provider.currentSportsList.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    childAspectRatio: 2 / 1,
+                                    crossAxisSpacing: 10.0,
+                                    mainAxisSpacing: 10.0),
+                            itemBuilder: (context, index) {
+                              final Sport sport =
+                                  provider.currentSportsList[index];
+                              final Function onSportCardPressed = () async {
+                                provider.resetCurrentSportsList();
+                                provider.textEditingController.clear();
+                                FocusScope.of(context).unfocus();
+                                Navigator.pushNamed(
+                                    context, AnimatedWarmUpPageWidget.ID,
+                                    arguments:
+                                        WarmUpPageArguments(sport: sport));
+                              };
+
+                              if (index % 2 == 0) {
+                                return InkWell(
+                                    onTap: onSportCardPressed,
+                                    child: _sportCardIconTextBuilder(sport,
+                                        _sportNameStyle, actualDeviceSize));
+                              }
+                              return InkWell(
+                                  onTap: onSportCardPressed,
+                                  child: _sportCardTextIconBuilder(sport,
+                                      _sportNameStyle, actualDeviceSize));
+                            },
+                          ),
                   )
                 ],
               ),
@@ -124,29 +145,37 @@ class ChooseSportsPage extends StatelessWidget {
         borderRadius: BorderRadius.circular(9.0),
         color: cWHITE,
       ),
-      child: Row(
-        children: <Widget>[
-          Container(
-            margin: const EdgeInsets.all(5.0),
-            width: actualDeviceSize.width * 1 / 6,
-            height: actualDeviceSize.width * 1 / 6,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage('${sport.imageLocalPath}'),
-            )),
-          ),
-          SizedBox(
-            width: 2.0,
-          ),
-          Expanded(
-              child: Text(
-            '${sport.name}',
-            textAlign: TextAlign.center,
-            style: sportNameStyle,
-          )),
-        ],
-      ),
+      child: ResponsiveWidget(
+          uiBuilder: (context, DeviceInformation deviceInformation) {
+        return Row(
+          children: <Widget>[
+            Container(
+              margin: const EdgeInsets.all(5.0),
+              width: actualDeviceSize.width * 1 / 6,
+              height: actualDeviceSize.width * 1 / 6,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage('${sport.imageLocalPath}'),
+              )),
+            ),
+            SizedBox(
+              width: 2.0,
+            ),
+            Container(
+              width: deviceInformation.localWidgetSize.width / 2,
+              child: FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Text(
+                  '${sport.name}',
+                  textAlign: TextAlign.center,
+                  style: sportNameStyle,
+                ),
+              ),
+            ),
+          ],
+        );
+      }),
     );
   }
 
@@ -157,34 +186,36 @@ class ChooseSportsPage extends StatelessWidget {
         borderRadius: BorderRadius.circular(9.0),
         color: cWHITE,
       ),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Text(
-              '${sport.name}',
-              textAlign: TextAlign.center,
-              style: sportNameStyle,
+      child: ResponsiveWidget(
+          uiBuilder: (context, DeviceInformation deviceInformation) {
+        return Row(
+          children: <Widget>[
+            SizedBox(
+              width: 2.0,
             ),
-          ),
-          SizedBox(
-            width: 2.0,
-          ),
-          Container(
-            margin: const EdgeInsets.all(5.0),
-            width: actualDeviceSize.width * 1 / 6,
-            height: actualDeviceSize.width * 1 / 6,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage('${sport.imageLocalPath}'),
-            )),
-          ),
-//          Padding(
-//            padding: const EdgeInsets.all(8.0),
-//            child: Image.asset('${sport.imageLocalPath}'),
-//          ),
-        ],
-      ),
+            Container(
+              width: deviceInformation.localWidgetSize.width / 2,
+              child: FittedBox(
+                child: Text(
+                  '${sport.name}',
+                  textAlign: TextAlign.center,
+                  style: sportNameStyle,
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.all(5.0),
+              width: actualDeviceSize.width * 1 / 6,
+              height: actualDeviceSize.width * 1 / 6,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage('${sport.imageLocalPath}'),
+              )),
+            ),
+          ],
+        );
+      }),
     );
   }
 }
