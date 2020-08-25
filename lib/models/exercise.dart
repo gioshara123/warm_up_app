@@ -1,4 +1,4 @@
-import 'package:wvs_warm_up/enums/warm_up_exercise.dart';
+import 'package:wvs_warm_up/enums/warm_up_mode.dart';
 import 'package:wvs_warm_up/models/exercises.dart';
 
 class Exercise {
@@ -7,7 +7,7 @@ class Exercise {
   final String exerciseRepetition;
   final String exerciseGif;
   final String exerciseName;
-  final WarmUpExercise warmUpExerciseMode;
+  final WarmUpMode warmUpExerciseMode;
 
   @override
   String toString() {

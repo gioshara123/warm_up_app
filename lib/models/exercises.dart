@@ -1,4 +1,4 @@
-import 'package:wvs_warm_up/enums/warm_up_exercise.dart';
+import 'package:wvs_warm_up/enums/warm_up_mode.dart';
 
 class Exercises {
   int exerciseLength;
@@ -6,7 +6,7 @@ class Exercises {
   List<int> exerciseWorkTimes;
   List<String> exerciseHints;
   List<String> exerciseNames;
-  List<WarmUpExercise> warmUpModes;
+  List<WarmUpMode> warmUpModes;
   List<String> exerciseRepetition;
   Exercises(
       {this.exerciseGifs,

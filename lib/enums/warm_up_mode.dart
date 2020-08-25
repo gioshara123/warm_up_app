@@ -1,0 +1,1 @@
+enum WarmUpMode { withTime, withoutTime }
