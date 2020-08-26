@@ -30,14 +30,17 @@ class WarmUpTab extends StatelessWidget {
     return Scaffold(
       body: ScrollConfiguration(
         behavior: NoGlowBehaviour(),
-        child: SingleChildScrollView(
-          child: Container(
+        child: Scrollbar(
+          controller: provider.warmUpTabScrollController,
+          child: SingleChildScrollView(
+            controller: provider.warmUpTabScrollController,
             child: Column(
               children: <Widget>[
                 Align(
-                    alignment: Alignment.centerRight,
-                    child: Text('${exercise.exerciseRepetition}',
-                        style: secondaryTextStyle)),
+                  alignment: Alignment.centerRight,
+                  child: Text('${exercise.exerciseRepetition}',
+                      style: secondaryTextStyle),
+                ),
                 Text(
                   '${exercise.exerciseName}',
                   style: secondaryTextStyle,
@@ -78,26 +81,30 @@ class WarmUpTab extends StatelessWidget {
                   height: 10.0,
                 ),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Text(
                       ' Tips:',
                       style: secondaryTextStyle,
                     ),
                     IconButton(
+                      padding: const EdgeInsets.all(0),
                       icon: provider.tipsState == WidgetState.Default
                           ? Icon(
-                              Icons.keyboard_arrow_down,
-                              color: cWHITE,
-                            )
-                          : Icon(
                               Icons.keyboard_arrow_up,
                               color: cWHITE,
+                              size: actualDeviceSize.width * 1 / 15,
+                            )
+                          : Icon(
+                              Icons.keyboard_arrow_down,
+                              color: cWHITE,
+                              size: actualDeviceSize.width * 1 / 15,
                             ),
                       onPressed: () => provider.onTipsStateChanged(),
                     ),
                   ],
                 ),
-                provider.tipsState == WidgetState.Default
+                provider.tipsState == WidgetState.Changed
                     ? Column(
                         children: <Widget>[
                           for (var exerciseHint

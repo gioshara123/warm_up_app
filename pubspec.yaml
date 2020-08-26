@@ -31,6 +31,9 @@ dependencies:
   device_preview: ^0.4.8
   provider: ^4.3.2+1
   countdown: ^0.1.0
+  assets_audio_player:   ^1.0.1
+  vibration: ^1.4.0
+  flutter_ringtone_player: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -50,6 +53,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/
+    - assets/audios/
     - images/sport_icons/
     - images/gif_exercises/am_football/
     - images/gif_exercises/hockey/

@@ -8,7 +8,7 @@ void main() {
   runApp(
     DevicePreview(
       builder: (context) => WvsWarmUpApp(),
-      enabled: false,
+      enabled: true,
     ),
   );
 }
@@ -17,12 +17,12 @@ class WvsWarmUpApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false ,
+      debugShowCheckedModeBanner: false,
       locale: DevicePreview.of(context).locale, // <--- /!\ Add the locale
       builder: DevicePreview.appBuilder, // <--- /!\ Add the builder
       routes: {
-        ChooseSportsPage.ID : (context)=>ChooseSportsPage(),
-        AnimatedWarmUpPageWidget.ID : (context)=>AnimatedWarmUpPageWidget(),
+        ChooseSportsPage.ID: (context) => ChooseSportsPage(),
+        AnimatedWarmUpPageWidget.ID: (context) => AnimatedWarmUpPageWidget(),
       },
       initialRoute: ChooseSportsPage.ID,
       theme: ThemeData(

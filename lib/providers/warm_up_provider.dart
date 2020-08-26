@@ -5,9 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:wvs_warm_up/enums/warm_up_mode.dart';
 import 'package:wvs_warm_up/enums/widget_state.dart';
 import 'package:wvs_warm_up/models/exercises.dart';
+import 'package:wvs_warm_up/services/sounds_services.dart';
 
 class WarmUpProvider with ChangeNotifier {
   WidgetState _tipsState;
+
+  ScrollController warmUpTabScrollController;
 
   WidgetState get tipsState => _tipsState;
   StreamSubscription<Duration> timerSubscription;
@@ -63,10 +66,14 @@ class WarmUpProvider with ChangeNotifier {
     setDefaultValues();
   }
 
-  void onTipsStateChanged() {
+  void onTipsStateChanged() async {
     switch (_tipsState) {
       case WidgetState.Default:
+        notifyListeners();
         _tipsState = WidgetState.Changed;
+        await Future.delayed(Duration(milliseconds: 100));
+        warmUpTabScrollController
+            .jumpTo(warmUpTabScrollController.position.maxScrollExtent);
         break;
       case WidgetState.Changed:
         _tipsState = WidgetState.Default;
@@ -82,7 +89,7 @@ class WarmUpProvider with ChangeNotifier {
     _currentWarmUpMode = exercises.warmUpModes[0];
     _timerValue = "0:00";
     _tipsState = WidgetState.Default;
-
+    warmUpTabScrollController = ScrollController(initialScrollOffset: 0);
     //animationController = AnimationController(vsync: tickerProviderStateMixin, duration: Duration(seconds:1),);
     pageController = PageController(initialPage: 0);
   }
@@ -132,15 +139,24 @@ class WarmUpProvider with ChangeNotifier {
       notifyListeners();
       return;
     }
+    bool ringingBellPlayed = false;
+
     int currentWorkTime = exercises.exerciseWorkTimes[warmUpPageCurrentIndex];
     final CountDown countDown = CountDown(Duration(seconds: currentWorkTime));
     timerSubscription = countDown.stream.listen(null)
       ..onData((Duration duration) {
+        if (currentWorkTime / 2 == duration.inSeconds && !ringingBellPlayed) {
+          ringingBellPlayed = true;
+
+          playBoxingBellSound();
+        }
         timerValue = getProperTime(duration);
         timerBarLevel = duration.inMilliseconds / (currentWorkTime * 1000);
       })
       ..onDone(() {
         resetTimerValues();
+        playRingToneDevice();
+        vibrateDevice();
       });
     notifyListeners();
   }
@@ -165,5 +181,7 @@ class WarmUpProvider with ChangeNotifier {
     pageController = null;
     timerSubscription?.cancel();
     timerSubscription = null;
+    warmUpTabScrollController.dispose();
+    warmUpTabScrollController = null;
   }
 }

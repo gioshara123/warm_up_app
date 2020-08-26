@@ -7,6 +7,7 @@ import 'package:wvs_warm_up/models/exercise.dart';
 import 'package:wvs_warm_up/models/exercises.dart';
 import 'package:wvs_warm_up/page_arguments/warm_up_page_arguments.dart';
 import 'package:wvs_warm_up/providers/warm_up_provider.dart';
+import 'package:wvs_warm_up/services/sounds_services.dart';
 import 'package:wvs_warm_up/services/ui_services.dart';
 import 'package:wvs_warm_up/tabs/warm_up_tab.dart';
 import 'package:wvs_warm_up/widgets/rounded_icon_button.dart';
@@ -18,7 +19,6 @@ class WarmUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(tickerProviderStateMixin);
     final Size actualDeviceSize = getActualDeviceSize(MediaQuery.of(context));
     final WarmUpPageArguments warmUpPageArguments =
         ModalRoute.of(context).settings.arguments;
@@ -48,7 +48,6 @@ class WarmUpPage extends StatelessWidget {
             children: <Widget>[
               SafeArea(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Container(
                       child: Text(
@@ -61,20 +60,26 @@ class WarmUpPage extends StatelessWidget {
                         color: cSECONDARY_COLOR,
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        '$sportName'.toUpperCase(),
-                        style: primaryTextStyle,
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: actualDeviceSize.width * 1 / 15),
+                        child: FittedBox(
+                          child: Text(
+                            '$sportName'.toUpperCase(),
+                            style: primaryTextStyle,
+                          ),
+                        ),
                       ),
                     ),
                     IconButton(
-                      padding: const EdgeInsets.all(0),
+                      padding: EdgeInsets.only(
+                          right: actualDeviceSize.width * 1 / 30),
                       onPressed: () => Navigator.pop(context),
                       icon: Icon(
                         Icons.close,
                         color: cWHITE,
-                        size: actualDeviceSize.width * 1 / 10,
+                        size: actualDeviceSize.width * 1 / 15,
                       ),
                     ),
                   ],
@@ -142,40 +147,60 @@ class WarmUpPage extends StatelessWidget {
               SizedBox(
                 height: 10.0,
               ),
-              //for(var warmUpMode in exercises.warmUpModes)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  RoundedIconButton(
-                    icon: Icon(
-                      Icons.arrow_back_ios,
-                      color: cSECONDARY_COLOR,
-                    ),
-                    onPressed: () => provider.onPreviousExerciseChange(),
-                  ),
-                  provider.currentWarmUpMode == WarmUpMode.withTime
-                      ? RoundedIconButton(
+              SafeArea(
+                top: false,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(
+                        child: RoundedIconButton(
                           icon: Icon(
-                            provider.timerSubscription == null ||
-                                    provider.timerSubscription.isPaused
-                                ? Icons.play_arrow
-                                : Icons.pause,
+                            Icons.arrow_back_ios,
                             color: cSECONDARY_COLOR,
+                            size: actualDeviceSize.width * 1 / 15,
                           ),
-                          onPressed: provider.timerSubscription == null ||
-                                  provider.timerSubscription.isPaused
-                              ? () => provider.onTimerRun()
-                              : () => provider.onTimerPause(),
-                        )
-                      : Container(),
-                  RoundedIconButton(
-                    icon: Icon(
-                      Icons.arrow_forward_ios,
-                      color: cSECONDARY_COLOR,
-                    ),
-                    onPressed: () => provider.onNextExerciseChange(),
+                          onPressed: () => provider.onPreviousExerciseChange(),
+                        ),
+                      ),
+                      SizedBox(
+                        width: actualDeviceSize.width * 1 / 30,
+                      ),
+                      provider.currentWarmUpMode == WarmUpMode.withTime
+                          ? Expanded(
+                              child: RoundedIconButton(
+                                icon: Icon(
+                                  provider.timerSubscription == null ||
+                                          provider.timerSubscription.isPaused
+                                      ? Icons.play_arrow
+                                      : Icons.pause,
+                                  color: cSECONDARY_COLOR,
+                                  size: actualDeviceSize.width * 1 / 15,
+                                ),
+                                onPressed: provider.timerSubscription == null ||
+                                        provider.timerSubscription.isPaused
+                                    ? () => provider.onTimerRun()
+                                    : () => provider.onTimerPause(),
+                              ),
+                            )
+                          : Container(),
+                      SizedBox(
+                        width: actualDeviceSize.width * 1 / 30,
+                      ),
+                      Expanded(
+                        child: RoundedIconButton(
+                          icon: Icon(
+                            Icons.arrow_forward_ios,
+                            color: cSECONDARY_COLOR,
+                            size: actualDeviceSize.width * 1 / 15,
+                          ),
+                          onPressed: () => provider.onNextExerciseChange(),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               )
             ],
           ),
