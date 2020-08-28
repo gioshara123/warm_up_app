@@ -84,7 +84,7 @@ class WarmUpTab extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      ' Tips:',
+                      ' Tipps:',
                       style: secondaryTextStyle,
                     ),
                     IconButton(

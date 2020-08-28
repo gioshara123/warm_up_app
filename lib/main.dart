@@ -28,6 +28,7 @@ class WvsWarmUpApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: cPRIMARY_COLOR,
         scaffoldBackgroundColor: cBLACK,
+        fontFamily: cUBUNTU_REGULAR,
       ),
     );
   }

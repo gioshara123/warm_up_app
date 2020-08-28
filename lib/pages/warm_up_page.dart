@@ -7,7 +7,6 @@ import 'package:wvs_warm_up/models/exercise.dart';
 import 'package:wvs_warm_up/models/exercises.dart';
 import 'package:wvs_warm_up/page_arguments/warm_up_page_arguments.dart';
 import 'package:wvs_warm_up/providers/warm_up_provider.dart';
-import 'package:wvs_warm_up/services/sounds_services.dart';
 import 'package:wvs_warm_up/services/ui_services.dart';
 import 'package:wvs_warm_up/tabs/warm_up_tab.dart';
 import 'package:wvs_warm_up/widgets/rounded_icon_button.dart';

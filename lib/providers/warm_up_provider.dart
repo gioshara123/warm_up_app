@@ -166,10 +166,9 @@ class WarmUpProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  /***
+  /*
    * Services
    */
-
   String getProperTime(Duration dur) {
     return '${dur.inMinutes}:${(dur.inSeconds % 60).toString().padLeft(2, '0')}';
   }

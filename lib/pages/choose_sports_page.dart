@@ -10,7 +10,6 @@ import 'package:wvs_warm_up/services/ui_services.dart';
 import 'package:wvs_warm_up/widgets/no_glow_behaviour.dart';
 import 'package:wvs_warm_up/widgets/responsive_widget.dart';
 import 'package:wvs_warm_up/widgets/rounded_rectangle_text_field.dart';
-import '../const_exercise_information.dart';
 
 class ChooseSportsPage extends StatelessWidget {
   static const String ID = "./";
@@ -19,7 +18,7 @@ class ChooseSportsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size actualDeviceSize = getActualDeviceSize(MediaQuery.of(context));
     final TextStyle _sportNameStyle =
-        TextStyle(fontSize: actualDeviceSize.width * 1 / 18);
+        TextStyle(fontSize: cPAR(actualDeviceSize.width));
 
     return ChangeNotifierProvider<ChooseSportsProvider>(
       create: (BuildContext context) => ChooseSportsProvider(),
@@ -104,7 +103,7 @@ class ChooseSportsPage extends StatelessWidget {
           shape: BoxShape.circle,
           image: DecorationImage(
             image: AssetImage(
-              'images/wvs_warm_up_logo.png',
+              'images/wvs_warm_up_logo.jpeg',
             ),
           ),
         ),
@@ -168,13 +167,10 @@ class ChooseSportsPage extends StatelessWidget {
             ),
             Container(
               width: deviceInformation.localWidgetSize.width / 2,
-              child: FittedBox(
-                fit: BoxFit.fitWidth,
-                child: Text(
-                  '${sport.name}',
-                  textAlign: TextAlign.center,
-                  style: sportNameStyle,
-                ),
+              child: Text(
+                '${sport.name}',
+                textAlign: TextAlign.center,
+                style: sportNameStyle,
               ),
             ),
           ],
@@ -199,12 +195,10 @@ class ChooseSportsPage extends StatelessWidget {
             ),
             Container(
               width: deviceInformation.localWidgetSize.width / 2,
-              child: FittedBox(
-                child: Text(
-                  '${sport.name}',
-                  textAlign: TextAlign.center,
-                  style: sportNameStyle,
-                ),
+              child: Text(
+                '${sport.name}',
+                textAlign: TextAlign.center,
+                style: sportNameStyle,
               ),
             ),
             Container(
