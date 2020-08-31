@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:countdown/countdown.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wvs_warm_up/enums/warm_up_mode.dart';
 import 'package:wvs_warm_up/enums/widget_state.dart';
@@ -40,8 +39,6 @@ class WarmUpProvider with ChangeNotifier {
   }
 
   WarmUpMode get currentWarmUpMode => _currentWarmUpMode;
-  final TickerProviderStateMixin tickerProviderStateMixin;
-  //AnimationController animationController;
 
   set timerBarLevel(double value) {
     _timerBarLevel = value;
@@ -58,7 +55,7 @@ class WarmUpProvider with ChangeNotifier {
   int get warmUpPageCurrentIndex => _warmUpPageCurrentIndex;
 
   WarmUpProvider(
-      {this.tickerProviderStateMixin, this.exercises, this.context}) {
+      {this.exercises, this.context}) {
     initWarmUpPage();
   }
 

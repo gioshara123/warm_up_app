@@ -66,7 +66,7 @@ class ChooseSportsPage extends StatelessWidget {
                                   provider.textEditingController.clear();
                                   FocusScope.of(context).unfocus();
                                   Navigator.pushNamed(
-                                      context, AnimatedWarmUpPageWidget.ID,
+                                      context, WarmUpPage.ID,
                                       arguments:
                                           WarmUpPageArguments(sport: sport));
                                 };
@@ -102,6 +102,7 @@ class ChooseSportsPage extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           image: DecorationImage(
+            fit: BoxFit.cover,
             image: AssetImage(
               'images/wvs_warm_up_logo.jpeg',
             ),

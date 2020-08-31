@@ -5,12 +5,7 @@ import 'package:wvs_warm_up/pages/choose_sports_page.dart';
 import 'package:wvs_warm_up/pages/warm_up_page.dart';
 
 void main() {
-  runApp(
-    DevicePreview(
-      builder: (context) => WvsWarmUpApp(),
-      enabled: true,
-    ),
-  );
+  runApp(WvsWarmUpApp());
 }
 
 class WvsWarmUpApp extends StatelessWidget {
@@ -18,11 +13,9 @@ class WvsWarmUpApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      locale: DevicePreview.of(context).locale, // <--- /!\ Add the locale
-      builder: DevicePreview.appBuilder, // <--- /!\ Add the builder
       routes: {
         ChooseSportsPage.ID: (context) => ChooseSportsPage(),
-        AnimatedWarmUpPageWidget.ID: (context) => AnimatedWarmUpPageWidget(),
+        WarmUpPage.ID: (context) => WarmUpPage(),
       },
       initialRoute: ChooseSportsPage.ID,
       theme: ThemeData(

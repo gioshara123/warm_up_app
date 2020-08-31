@@ -12,9 +12,8 @@ import 'package:wvs_warm_up/tabs/warm_up_tab.dart';
 import 'package:wvs_warm_up/widgets/rounded_icon_button.dart';
 
 class WarmUpPage extends StatelessWidget {
-  final TickerProviderStateMixin tickerProviderStateMixin;
-
-  const WarmUpPage({Key key, this.tickerProviderStateMixin}) : super(key: key);
+  static const ID = "./WarmUpPage";
+  const WarmUpPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +37,6 @@ class WarmUpPage extends StatelessWidget {
     );
     return ChangeNotifierProvider<WarmUpProvider>(
       create: (BuildContext context) => WarmUpProvider(
-          tickerProviderStateMixin: tickerProviderStateMixin,
           exercises: exercises,
           context: context),
       child: Consumer<WarmUpProvider>(builder: (context, provider, _) {
@@ -48,6 +46,7 @@ class WarmUpPage extends StatelessWidget {
               SafeArea(
                 child: Row(
                   children: <Widget>[
+                    provider.currentWarmUpMode == WarmUpMode.withTime ?
                     Container(
                       child: Text(
                         '${provider.timerValue}',
@@ -58,7 +57,7 @@ class WarmUpPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15.0),
                         color: cSECONDARY_COLOR,
                       ),
-                    ),
+                    ) : Container(),
                     Expanded(
                       child: Padding(
                         padding: EdgeInsets.symmetric(
@@ -231,23 +230,6 @@ class WarmUpPage extends StatelessWidget {
     return Text(
       '',
       style: pageIndexStyle,
-    );
-  }
-}
-
-class AnimatedWarmUpPageWidget extends StatefulWidget {
-  static const String ID = './AnimatedWarmUpPageWidget';
-  @override
-  _AnimatedWarmUpPageWidgetState createState() =>
-      _AnimatedWarmUpPageWidgetState();
-}
-
-class _AnimatedWarmUpPageWidgetState extends State<AnimatedWarmUpPageWidget>
-    with TickerProviderStateMixin {
-  @override
-  Widget build(BuildContext context) {
-    return WarmUpPage(
-      tickerProviderStateMixin: this,
     );
   }
 }
